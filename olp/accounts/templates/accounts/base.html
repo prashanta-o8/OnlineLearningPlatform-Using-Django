@@ -1,0 +1,17 @@
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'course_list' %}">My Courses</a></li>
+        {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <li><a href="{% url 'create_course' %}">Create Course</a></li>
+            {% else %}
+                <li><a href="{% url 'student_progress' %}">My Progress</a></li>
+            {% endif %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</nav>

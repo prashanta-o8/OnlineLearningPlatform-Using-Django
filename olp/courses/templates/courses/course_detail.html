@@ -1,0 +1,28 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+    
+    {% if user.is_authenticated and not user.is_staff %}
+        {% if is_enrolled %}
+            <p>You are enrolled in this course.</p>
+        {% else %}
+            <a href="{% url 'enroll_course' course.id %}">Enroll in this course</a>
+        {% endif %}
+    {% endif %}
+
+    <h2>Lessons</h2>
+    <ul>
+    {% for lesson in lessons %}
+        <li><a href="{% url 'lesson_detail' lesson.id %}">{{ lesson.title }}</a></li>
+    {% empty %}
+        <li>No lessons available.</li>
+    {% endfor %}
+    </ul>
+    {% if user.is_staff %}
+        <a href="{% url 'create_lesson' course.id %}">Add Lesson</a>
+    {% endif %}
+{% endblock %}

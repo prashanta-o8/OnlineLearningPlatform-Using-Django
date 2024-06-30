@@ -1,0 +1,13 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}Enroll in {{ course.title }}{% endblock %}
+
+{% block content %}
+    <h1>Enroll in {{ course.title }}</h1>
+    <p>Are you sure you want to enroll in this course?</p>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Confirm Enrollment">
+    </form>
+    <a href="{% url 'course_detail' course.id %}">Cancel</a>
+{% endblock %}

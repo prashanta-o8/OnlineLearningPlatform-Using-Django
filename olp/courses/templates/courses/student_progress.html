@@ -1,0 +1,28 @@
+{% extends 'courses/base.html' %}
+
+{% load course_tags %}
+
+{% block title %}My Progress{% endblock %}
+
+{% block content %}
+    <h1>My Progress</h1>
+    {% for enrollment in enrollments %}
+        <h2>{{ enrollment.course.title }}</h2>
+        <ul>
+        {% for lesson in enrollment.course.lessons.all %}
+            <li>
+                {{ lesson.title }}:
+                {% if lesson|completed_by:request.user %}
+                    Completed
+                {% else %}
+                    Not completed
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No lessons available.</li>
+        {% endfor %}
+        </ul>
+    {% empty %}
+        <p>You are not enrolled in any courses.</p>
+    {% endfor %}
+{% endblock %}
